@@ -1,7 +1,7 @@
 class MaxIntSet
   def initialize(max)
     @max = max
-    @store = Array.new(@max) {false}
+    @store = Array.new(@max) { false }
   end
 
   def insert(num)
@@ -30,28 +30,27 @@ class IntSet
     if self.include?(num)
       num
     else
-      @store[num % num_buckets] << num
+      self[num] << num
     end
   end
 
   def remove(num)
     if self.include?(num)
-      @store[num % num_buckets].delete(num)
+      self[num].delete(num)
     end
   end
 
   def include?(num)
-    if @store[num % num_buckets].include?(num)
-      return true
+    if self[num].include?(num)
+      true
     else
-      return false
+      false
     end
   end
 
   private
 
   def [](num)
-    # optional but useful; return the bucket corresponding to `num`
     @store[num % num_buckets]
   end
 
@@ -80,17 +79,17 @@ class ResizingIntSet
   end
 
   def include?(num)
-    if @store[num % num_buckets].include?(num)
-      return true
+    if self[num].include?(num)
+      true
     else
-      return false
+      false
     end
   end
 
   private
 
   def [](num)
-    @store[num % num_buckets]# optional but useful; return the bucket corresponding to `num`
+    @store[num % num_buckets]
   end
 
   def num_buckets
@@ -100,7 +99,7 @@ class ResizingIntSet
   def resize!
     @count = 0
     little_arr = @store
-    @store = Array.new(num_buckets * 2) {Array.new}
+    @store = Array.new(num_buckets * 2) { Array.new }
     little_arr.flatten.each { |ele| insert(ele) }
   end
 end
